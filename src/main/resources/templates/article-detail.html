@@ -6,11 +6,79 @@
   <title th:text="${article.title}">게시글</title>
   <meta name="_csrf" th:content="${_csrf.token}">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+  <style>
+    body {
+      background-color: #fffaf6;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    header .brand {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    header .brand .logo {
+      height: 100px;
+      margin-right: 12px;
+    }
+
+    header .brand .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #e75480;
+    }
+    main {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    header .menu {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1rem;
+
+    }
+    .actions {
+      text-align: center;
+      margin-top: 70px;
+    }
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      background-color: #fce4ec;
+      border-top: 2px dotted #e75480;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+
+
+  </style>
 </head>
 <body>
 <header>
   <a href="/" class="brand">
-    <img src="/img/logo.png" alt="Ra Board" style="height:100px;">
+    <img src="/img/logo.png" alt="Ra Board" style="height:80px;">
+    <span class="title">라디네 게시판</span>
   </a>
   <div>
       <span sec:authorize="isAnonymous()">
@@ -31,13 +99,20 @@
   <input type="hidden" id="article-id" th:value="${article.id}">
   <div th:text="${article.content}">내용</div>
 
-  <div th:if="${isOwner}">
+  <div th:if="${isOwner}" class="actions">
     <a th:href="@{'/articles/' + ${article.id} + '/edit'}" id="modify-btn-link">수정</a>
-    <button id="delete-btn">삭제</button>
+    <button id="delete-btn" class="delete-btn">삭제</button>
   </div>
 
-  <p><a href="/articles">목록</a></p>
+  <div class="list">
+    <a href="/articles" class="back-btn">목록</a>
+  </div>
+
 </main>
 <script src="/js/article.js" defer></script>
+
+<footer>
+  <p>© 2025.08.19 라디네 게시판 | 만든이: 라디네</p>
+</footer>
 </body>
 </html>

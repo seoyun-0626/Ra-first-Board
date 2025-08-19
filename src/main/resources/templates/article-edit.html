@@ -6,8 +6,83 @@
   <title>글 수정</title>
   <meta name="_csrf" th:content="${_csrf.token}">
   <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+  <style>
+    body {
+      background-color: #fffaf6;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      position: relative;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    header .brand {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    header .brand .logo {
+      height: 100px;
+      margin-right: 12px;
+    }
+
+    header .brand .title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #e75480;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    form textarea {
+      width: 100%;
+      min-height: 300px;
+      resize: vertical;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 1em;
+    }
+
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 15px;
+      text-align: center;
+      background-color: #fce4ec;
+      border-top: 2px dotted #e75480;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+  </style>
+
 </head>
 <body>
+<header>
+  <a href="/" class="brand">
+    <img src="/img/logo.png" alt="Ra Board" style="height:80px;">
+    <span class="title">라디네 게시판</span>
+  </a>
+</header>
+
 <h1>글 수정</h1>
 <form th:action="@{'/articles/' + ${article.id} + '/edit'}" method="post">
   <input type="hidden" id="article-id" th:value="${article} != null ? ${article.id} : ''" />
@@ -26,5 +101,10 @@
   <a href="/articles">목록</a>
 </form>
 <script src="/js/article.js" defer></script>
+
+<footer>
+  <p>© 2025.08.19 라디네 게시판 | 만든이: 라디네</p>
+</footer>
+
 </body>
 </html>

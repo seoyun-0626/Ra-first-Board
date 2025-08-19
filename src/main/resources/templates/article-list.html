@@ -6,14 +6,115 @@
     <title>게시글 목록</title>
     <meta name="_csrf" th:content="${_csrf.token}">
     <meta name="_csrf_header" th:content="${_csrf.headerName}">
+
+    <style>
+        body {
+          background-color: #fffaf6;
+          margin: 0;
+          font-family: Arial, sans-serif;
+        }
+
+        header {
+          position: relative;
+          margin-bottom: 20px;
+          padding: 10px 20px;
+          text-align: center;
+        }
+
+        header .brand {
+          display: inline-flex;
+          align-items: center;
+          text-decoration: none;
+        }
+
+        header .brand .logo {
+          height: 100px;
+          margin-right: 12px;
+        }
+
+        header .brand .title {
+          font-size: 2.5rem;
+          font-weight: bold;
+          color: #e75480;
+        }
+
+        header .menu {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-size: 1rem;
+        }
+
+        header .menu a {
+          color: blue;
+          margin-left: 15px;
+          text-decoration: none;
+        }
+
+        header .menu a:hover {
+          text-decoration: underline;
+        }
+
+
+        .board { //  게시판 큰 틀
+          border: 2px solid #ccc;
+          border-radius: 12px;
+          width: 80%;
+          margin: 30px auto;
+          padding: 20px;
+          background-color: white;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+          text-align: center;
+        }
+
+        .board ul {
+          list-style: none;
+          padding: 0;
+        }
+
+        .board ul li {
+          border: 1px solid #ccc;
+          padding: 10px 15px;
+          margin: 10px 0;
+          border-radius: 6px;
+          background-color: white;  // 글씨기본배경색
+          text-align: left;
+        }
+
+        .board ul li:hover {
+          background-color: #ffeee8;  //글씨터치배경색
+        }
+
+        .board ul li a {
+          text-decoration: none;
+          font-weight: bold;
+          color: black;  //글씨색
+        }
+
+        footer {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          padding: 15px;
+          text-align: center;
+          background-color: #fce4ec;
+          border-top: 2px dotted #e75480;
+          color: #555;
+          font-size: 0.9rem;
+        }
+}
+    </style>
 </head>
+
 <body>
 <header>
     <a href="/" class="brand">
-        <img src="/img/logo.png" alt="Ra Board" style="height:100px;">
+        <img src="/img/logo.png" alt="Ra Board" class="logo">
+        <span class="title">라디네 게시판</span>
     </a>
-    <div>
-      <span sec:authorize="isAnonymous()">
+    <div class="menu">
+        <span sec:authorize="isAnonymous()">
         <a href="/login">로그인</a>
         <a href="/join">회원가입</a>
       </span>
@@ -26,16 +127,27 @@
       </span>
     </div>
 </header>
-<h1>게시글 목록</h1>
-<div sec:authorize="isAuthenticated()">
-    <a href="/articles/new">새글</a> <!-- 비회원은 안 보임 -->
-</div>
 
-<div th:if="${#lists.isEmpty(articles)}">아직 글이 없습니다.</div>
-<ul th:unless="${#lists.isEmpty(articles)}">
-    <li th:each="a : ${articles}">
-        <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
-    </li>
-</ul>
+<main>
+    <div class="board">
+        <h1>게시글</h1>
+        <div sec:authorize="isAuthenticated()">
+            <a href="/articles/new">글쓰기</a>
+        </div>
+
+        <div th:if="${#lists.isEmpty(articles)}">아직 글이 없습니다.</div>
+        <ul th:unless="${#lists.isEmpty(articles)}">
+            <li th:each="a : ${articles}">
+                <a th:href="@{'/articles/' + ${a.id}}" th:text="${a.title}">제목</a>
+            </li>
+        </ul>
+    </div>
+</main>
+
+<footer>
+    <p>© 2025.08.19 라디네 게시판 | 만든이: 라디네</p>
+</footer>
+
 </body>
+
 </html>
